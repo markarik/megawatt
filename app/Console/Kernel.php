@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
 	 * @var array
 	 */
 	protected $commands = [
-		//
+		
+		Commands\MinuteUpdate::class
+
 	];
 
 	/**
@@ -27,11 +29,14 @@ class Kernel extends ConsoleKernel
 	protected function schedule(Schedule $schedule)
 	{
 		// $schedule->command('inspire')->hourly();
-		$schedule->call(new SendExpiryNotifications)
-			->everyTenMinutes()
-			// ->everyMinute()
-			->between('8:00', '17:00')
-			->timezone('Africa/Nairobi');
+		// $schedule->call(new SendExpiryNotifications)
+		// 	->everyTenMinutes()
+		// 	// ->everyMinute()
+		// 	->between('8:00', '17:00')
+		// 	->timezone('Africa/Nairobi');
+		$schedule->command('minute:expire')
+		->everyMinute();
+
 	}
 
 	/**

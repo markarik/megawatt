@@ -21,6 +21,7 @@ class CommonHelpers {
 		if( $mobile_no && $sms_text ){
 			$username = env('AFRICAS_TALKING_USERNAME');
 			$apikey = env('AFRICAS_TALKING_API_KEY');
+
 			
 			try {
 				$from = 'MEGATECH'; // Specify your premium shortCode and keyword
@@ -28,7 +29,7 @@ class CommonHelpers {
 				$results = $gateway->sendMessage($mobile_no, $sms_text, $from);
 				
 				// For troubleshooting purposes
-				// dd( $results );
+				dd( $results );
 				
 				if( strtolower($results[0]->status) == 'success' ){
 					return TRUE;
