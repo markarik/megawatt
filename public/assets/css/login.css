@@ -1,0 +1,11 @@
+.login-form {
+	max-width: 400px;
+	width: 100%;
+	margin: auto;
+}
+
+.login-form .panel-heading img {
+	height: 200px;
+	margin: auto;
+}
+
