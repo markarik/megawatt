@@ -24,7 +24,7 @@ class CreateTrackersTable extends Migration
 			$table->string('mv_reg_no');
 			$table->integer('amount');
 			$table->bigInteger('creation_time');
-			$table->bigInteger('activation_time_old');
+			$table->bigInteger('init_activation_time');
 			$table->bigInteger('expiry_time_old');
 			$table->timestamps();
 		});
