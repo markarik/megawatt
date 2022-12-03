@@ -121,6 +121,7 @@ class HomeController extends Controller {
 		try{
 			$user = Auth::user();
 			$file_data = Excel::toArray([], $full_path);
+			// dd(count($file_data[0]));
 
 			$row_count = 0;
 			foreach ($file_data[0] as $row_no => $row) {
@@ -135,7 +136,6 @@ class HomeController extends Controller {
 						$existing_trackers = Tracker::where('id_no', $tracker_id_no)
 							->where('iccid', $tracker_iccid)
 							->count();
-
 						if( !$existing_trackers ){
 							$client_unique_data = [
 								'phone_no' => strip_tags($row[2]), 
@@ -143,7 +143,10 @@ class HomeController extends Controller {
 							$client_data = [
 								'name' => $client_name, 
 							];
-							$client = Client::updateOrCreate($client_unique_data, $client_data);
+							$client = Client::firstOrCreate($client_unique_data, $client_data);
+
+							
+
 							
 							$agent_unique_data = [
 								'ref_no' => strip_tags($row[12]), 
