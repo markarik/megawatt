@@ -29,7 +29,9 @@ class AfricasTalkingGateway extends Exception
   protected $_responseBody;
   protected $_responseInfo;
   
-  const SMS_URL          = 'https://api.africastalking.com/version1/messaging';
+  // const SMS_URL          = 'https://api.africastalking.com/version1/messaging';
+  const SMS_URL          = 'https://api.sandbox.africastalking.com/version1/messaging';
+
   const VOICE_URL        = 'https://voice.africastalking.com';
   const USER_DATA_URL    = 'https://api.africastalking.com/version1/user';
   const SUBSCRIPTION_URL = 'https://api.africastalking.com/version1/subscription';

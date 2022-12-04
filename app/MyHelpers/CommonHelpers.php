@@ -29,7 +29,6 @@ class CommonHelpers {
 				$results = $gateway->sendMessage($mobile_no, $sms_text, $from);
 				
 				// For troubleshooting purposes
-				dd( $results );
 				
 				if( strtolower($results[0]->status) == 'success' ){
 					return TRUE;
