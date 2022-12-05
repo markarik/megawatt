@@ -20,8 +20,14 @@ class Tracker extends Model
 		'amount', 
 		'init_activation_time', 
 		'creation_time', 
-		'expiry_time_old', 
+		'expiry_time', 
+
 	];
+
+	
+	protected $casts = [
+        'expiry_time' => 'date:Y-m-d'
+    ];
 	
 	protected $expiry_model;
 	

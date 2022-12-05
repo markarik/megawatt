@@ -167,7 +167,7 @@ class HomeController extends Controller {
 								'amount' => strip_tags($row[13]), 
 								'init_activation_time' => CommonHelpers::excelTimeToUnixTime($row[9]), 
 								'creation_time' => CommonHelpers::excelTimeToUnixTime($row[8]), 
-								'expiry_time_old' => CommonHelpers::excelTimeToUnixTime($row[10]), 
+								'expiry_time' => CommonHelpers::excelTimeToUnixTime($row[10]), 
 							];
 							$tracker = Tracker::create($tracker_data);
 							

@@ -28,14 +28,8 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		// $schedule->command('inspire')->hourly();
-		// $schedule->call(new SendExpiryNotifications)
-		// 	->everyTenMinutes()
-		// 	// ->everyMinute()
-		// 	->between('8:00', '17:00')
-		// 	->timezone('Africa/Nairobi');
-		$schedule->command('minute:expire')
-		->everyMinute();
+		$schedule->command('daily:expire')
+		->daily();
 
 	}
 

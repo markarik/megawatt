@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Query\Expression;
 
 class CreateTrackersTable extends Migration
 {
@@ -25,7 +26,9 @@ class CreateTrackersTable extends Migration
 			$table->integer('amount');
 			$table->bigInteger('creation_time');
 			$table->bigInteger('init_activation_time');
-			$table->bigInteger('expiry_time_old');
+			$table->bigInteger('expiry_time');
+			$table->boolean('notification_sent')->default(new Expression(0));
+
 			$table->timestamps();
 		});
 	}

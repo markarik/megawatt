@@ -81,6 +81,7 @@ class TrackerController extends Controller
 			'yearmonth' => $yearmonth, 
 			'all_trackers' => true, 
 		];
+		dd($view_data);
 		return view('admin.trackers.index', $view_data);
 	}
 
