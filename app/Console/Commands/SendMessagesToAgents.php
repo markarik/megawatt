@@ -49,7 +49,9 @@ class SendMessagesToAgents extends Command
 				$agent = $unsent_broadcast->agent;
 
 				$replace = [$agent->name, $agent->ref_no];
+
 				$sms_body = str_replace($find, $replace, $message->message);
+
 				CommonHelpers::sendSms($agent->ref_no, $sms_body);
 				
 				$unsent_broadcast->status = 1;
