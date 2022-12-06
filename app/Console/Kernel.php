@@ -42,23 +42,23 @@ class Kernel extends ConsoleKernel
 		
 
 		$schedule->command('daily:remain-two-weeks')
-		->dailyAt('11:00');
+		->dailyAt('11:00')->withoutOverlapping(20);
 		
 		$schedule->command('daily:remain-one-Day')
-		->dailyAt('13:00');
+		->dailyAt('13:00')->withoutOverlapping(20);
 		
 		$schedule->command('daily:checkExpired')
-		->dailyAt('00:00');
+		->dailyAt('00:00')->withoutOverlapping(20);
 
 		$schedule->command('daily:past-expiry-by-a-day')
-		->dailyAt('07:00');
+		->dailyAt('07:00')->withoutOverlapping(20);
 
 		
 		$schedule->command('daily:send-clients-messages')
-		->dailyAt('10:00');
+		->dailyAt('10:00')->withoutOverlapping(20);
 
 		$schedule->command('daily:send-agents-messages')
-		->dailyAt('08:00');
+		->dailyAt('08:00')->withoutOverlapping(20);
 
 		
 		
