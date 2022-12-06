@@ -54,12 +54,11 @@ class Kernel extends ConsoleKernel
 		->dailyAt('07:00');
 
 		
-		// $schedule->call(new SendClientBroadcastMessages)->everyMinute();
 		$schedule->command('daily:send-clients-messages')
-		->everyMinute();
+		->dailyAt('10:00');
 
 		$schedule->command('daily:send-agents-messages')
-		->everyMinute();
+		->dailyAt('08:00');
 
 		
 		
