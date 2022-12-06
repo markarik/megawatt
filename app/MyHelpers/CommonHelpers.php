@@ -28,11 +28,12 @@ class CommonHelpers {
 				$gateway = new AfricasTalkingGateway($username, $apikey);
 				$results = $gateway->sendMessage($mobile_no, $sms_text, $from);
 				
-				// For troubleshooting purposes
-				
+				// For troubleshooting purposes				
 				if( strtolower($results[0]->status) == 'success' ){
 					return TRUE;
 				}
+
+
 			} catch ( AfricasTalkingGatewayException $e ) {
 				// echo "Encountered an error while sending: ".$e->getMessage();
 				dd("AfricasTalking Gateway Exception: ".$e->getMessage());

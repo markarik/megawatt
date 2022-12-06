@@ -171,13 +171,13 @@ class HomeController extends Controller {
 							];
 							$tracker = Tracker::create($tracker_data);
 							
-							$tracker_expiry_data = [
-								'user_id' => $user->id, 
-								'tracker_id' => $tracker->id, 
-								'activation_time' => CommonHelpers::excelTimeToUnixTime($row[9]), 
-								'expiry_time' => CommonHelpers::excelTimeToUnixTime($row[10]), 
-							];
-							$tracker_expiry = TrackerExpiry::create($tracker_expiry_data);
+							// $tracker_expiry_data = [
+							// 	'user_id' => $user->id, 
+							// 	'tracker_id' => $tracker->id, 
+							// 	'activation_time' => CommonHelpers::excelTimeToUnixTime($row[9]), 
+							// 	'expiry_time' => CommonHelpers::excelTimeToUnixTime($row[10]), 
+							// ];
+							// $tracker_expiry = TrackerExpiry::create($tracker_expiry_data);
 						}else{
 							$error = 'A tracker with ID No. "<strong>' . $tracker_id_no . '</strong>" and/or ICCID "<strong>' . $tracker_iccid . '</strong>", belonging to "<strong>' . $client_name . '</strong>" on row number ' . ($row_count - 1) . ' already exists.';
 							break;

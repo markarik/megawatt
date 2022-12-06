@@ -18,7 +18,9 @@ class TrackerExpiry extends Model
 		'expiry_time', 
 		'notification', 
 	];
-	
+	protected $casts = [
+        'expiry_time' => 'date:Y-m-d'
+    ];
 	function user(){
 		return $this->belongsTo('App\Models\User');
 	}

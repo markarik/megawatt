@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use DB;
 use App\Models\Tracker;
-use App\Models\TrackerExpiry;
 
 use App\MyHelpers\CommonHelpers;
 
@@ -12,21 +10,21 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 
 
-class MinuteUpdate extends Command
+class PastExpiryByADay extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'daily:expire';
+    protected $signature = 'daily:past-expiry-by-a-day';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send Notifications to users to notify their suvscriptions are expired';
+    protected $description = 'Send Notifications to users to notify their subscriptions is expired.Past one day';
 
     /**
      * Create a new command instance.
@@ -62,9 +60,8 @@ class MinuteUpdate extends Command
 			$sms_tpl .= 'Call us on ' . $sys_phone_numbers;
 			
 			$find = ['#client_name', '#renewal_rate', '#car_plate', '#expiry_date'];
-			$intervals = config('notification.intervals');
 
-			$dt = Carbon::now();
+			$dt = Carbon::now()->subDay();
 			$dateformated = $dt->toDateString();
 			$trackers_expiries = Tracker::with('client')->
           
@@ -90,14 +87,11 @@ class MinuteUpdate extends Command
 
 						$sms_body = str_replace($find, $replace, $sms_tpl);
 
-						$sent = CommonHelpers::sendSms($client->phone_no, $sms_body);
-						// if( $sent ){
-
-						// }
+					CommonHelpers::sendSms($client->phone_no, $sms_body);
+						
 						
 				}
 			}
-		// }
 		
 	}
 

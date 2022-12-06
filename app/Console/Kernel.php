@@ -4,8 +4,10 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Crons\SendClientBroadcastMessages;
 
-use App\Crons\SendExpiryNotifications;
+
+
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +18,16 @@ class Kernel extends ConsoleKernel
 	 */
 	protected $commands = [
 		
-		Commands\MinuteUpdate::class
+		Commands\PastExpiryByADay::class,
+		Commands\CheckTwoWeeksRemaining::class,
+		Commands\CheckOneDayRemaining::class,
+		Commands\CheckallExpiredTrackers::class,
+		Commands\SendMessagesToAgents::class,
+		Commands\SendMessagesToClients::class,
+
+
+		
+
 
 	];
 
@@ -28,8 +39,33 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('daily:expire')
-		->daily();
+		
+
+		$schedule->command('daily:remain-two-weeks')
+		->dailyAt('11:00');
+		
+		$schedule->command('daily:remain-one-Day')
+		->dailyAt('13:00');
+		
+		$schedule->command('daily:checkExpired')
+		->dailyAt('00:00');
+
+		$schedule->command('daily:past-expiry-by-a-day')
+		->dailyAt('07:00');
+
+		
+		// $schedule->call(new SendClientBroadcastMessages)->everyMinute();
+		$schedule->command('daily:send-clients-messages')
+		->everyMinute();
+
+		$schedule->command('daily:send-agents-messages')
+		->everyMinute();
+
+		
+		
+
+
+
 
 	}
 
