@@ -47,8 +47,8 @@ class Kernel extends ConsoleKernel
 		$schedule->command('daily:remain-one-Day')
 		->dailyAt('13:00')->withoutOverlapping(20);
 		
-		$schedule->command('daily:checkExpired')
-		->dailyAt('00:00')->withoutOverlapping(20);
+		$schedule->command('daily:checkExpired')->everyMinute();
+		// ->dailyAt('00:00')->withoutOverlapping(20);
 
 		$schedule->command('daily:past-expiry-by-a-day')
 		->dailyAt('07:00')->withoutOverlapping(20);

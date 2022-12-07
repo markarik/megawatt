@@ -25,9 +25,9 @@ class Tracker extends Model
 	];
 
 	
-	protected $casts = [
-        'expiry_time' => 'date:Y-m-d'
-    ];
+	// protected $casts = [
+    //     'expiry_time' => 'date:Y-m-d'
+    // ];
 	
 	protected $expiry_model;
 	
