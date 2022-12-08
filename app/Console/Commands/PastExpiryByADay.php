@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Tracker;
+use App\Models\TrackerExpiry;
 
 use App\MyHelpers\CommonHelpers;
 
@@ -63,17 +63,16 @@ class PastExpiryByADay extends Command
 
 			$dt = Carbon::now()->subDay();
 			$dateformated = $dt->toDateString();
-			$trackers_expiries = Tracker::with('client')->
-          
-           where('expiry_time', '>',$dateformated)
-           ->get();
+			$trackers_expiries = TrackerExpiry::with('tracker.client')    
+			-> where('expiry_time', '=', CommonHelpers::excelTimeToUnixTime($dateformated))    
+			->get();  
 			
 
 			
 			if( $trackers_expiries ){
 				
 				foreach($trackers_expiries as $key => $expiry){
-					$client = $expiry->client;
+					$client = $expiry->tracker->client;
 					$plate_no = str_replace(' ', '', $expiry->mv_reg_no);
 
 						$replace = [

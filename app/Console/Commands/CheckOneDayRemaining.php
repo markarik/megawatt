@@ -56,22 +56,12 @@ class CheckOneDayRemaining extends Command
 
         $dt = Carbon::now()->addDay();
         $dateformated = $dt->toDateString();
-
-              //TODO check on this date error here
-
-
-    $trackers_expiries = TrackerExpiry::with('client')
-    
-    -> where('expiry_time', '!=', $dateformated)
-    
-    ->get();
-
-
-        
-        if( $trackers_expiries ){
-            
+              $trackers_expiries = TrackerExpiry::with('tracker.client')    
+    -> where('expiry_time', '=', CommonHelpers::excelTimeToUnixTime($dateformated))    
+    ->get();        
+        if( $trackers_expiries ){            
             foreach($trackers_expiries as $key => $expiry){
-                $client = $expiry->client;
+                $client = $expiry->tracker->client;
                 $plate_no = str_replace(' ', '', $expiry->mv_reg_no);
 
                     $replace = [
@@ -80,15 +70,8 @@ class CheckOneDayRemaining extends Command
                         $plate_no, 
                         date('j-M-y', (strtotime($expiry->expiry_time))) 
                     ];
-                    
-
-
                     $sms_body = str_replace($find, $replace, $sms_tpl);
-                    
-
                    CommonHelpers::sendSms($client->phone_no, $sms_body);
-
-                   
                     
             }
         }

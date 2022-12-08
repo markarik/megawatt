@@ -9,6 +9,9 @@ use DB;
 use App\Models\Client;
 use App\Models\Tracker;
 use App\Models\TrackerExpiry;
+use Carbon\Carbon;
+use App\MyHelpers\CommonHelpers;
+
 
 class TrackerController extends Controller
 {
@@ -133,15 +136,42 @@ class TrackerController extends Controller
 			'yearmonth' => $yearmonth, 
 			'expired_trackers' => true, 
 		];
+
+			// dd($view_data);
+
 		return view('admin.trackers.index', $view_data);
 	}
+
+
+	
 
 	function inactive(Request $request){	
 		$expiry_tbl = (new TrackerExpiry())->getTable();
 		$tracker_tbl = $this->tracker->getTable();
+
+		$dt = Carbon::now()->subDays(90);
+        $dateformated = $dt->toDateString();
+
+	
+// $dddata = [
+// "now" => time(),
+// "dateFormatted"=>$dateformated,
+// "gggdate "=> date("d-m-Y", time()),
+// "coom"=>CommonHelpers::excelTimeToUnixTime("8-12-2022"),
+// "isCheck" => time() == CommonHelpers::excelTimeToUnixTime("8-12-2022"),
+// "agai"=>date("d-m-Y", CommonHelpers::excelTimeToUnixTime("8-12-2022")),
+// "dt"=>$dt,
+
+// 	];
+	
+
+// 	dd($dddata);
+
+
+
 		
 		$model = $this->_filteredTrackersModel($request);
-		$trackers = $model->where($expiry_tbl.'.expiry_time', '<', time())
+		$trackers = $model->where($expiry_tbl.'.expiry_time', '<=', CommonHelpers::excelTimeToUnixTime($dateformated))
 			->orderBy($expiry_tbl.'.created_at', 'DESC')
 			->orderBy($expiry_tbl.'.expiry_time', 'DESC')
 			->paginate(20);

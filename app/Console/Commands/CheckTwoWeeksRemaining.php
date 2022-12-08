@@ -41,12 +41,15 @@ class CheckTwoWeeksRemaining extends Command
      */
     public function handle()
     {
+        $dt = Carbon::now()->addWeeks(2);
+        $dateformated = $dt->toDateString();
+
         $sys_paybill = env('SYS_PAYBILL');
         $sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 
 
         $sms_tpl = 'Hello #client_name,' . "\r\n";
-        $sms_tpl .= 'Your vehicle #car_plate annual tracking  fee will expire in 14 days time ' . "\r\n";
+        $sms_tpl .= 'Your vehicle #car_plate annual tracking  fee will expire in 14 days time on '.$dateformated . "\r\n";
         $sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
         $sms_tpl .= 'Acc No: #car_plate' . "\r\n";
         $sms_tpl .= 'Make plans to topup your subscription to continue enjoying your tracking experience.' . "\r\n";
@@ -54,24 +57,22 @@ class CheckTwoWeeksRemaining extends Command
         
         $find = ['#client_name', '#renewal_rate', '#car_plate', '#expiry_date'];
 
-        $dt = Carbon::now()->addDays(15);
-        $dateformated = $dt->toDateString();
 
-              //TODO check on this date error here
-
-
-    $trackers_expiries = TrackerExpiry::with('client')
+    $trackers_expiries = TrackerExpiry::with('tracker.client')
     
-    -> where('expiry_time', '!=', $dateformated)
+    -> where('expiry_time', '=', CommonHelpers::excelTimeToUnixTime($dateformated))
     
     ->get();
+
+
 
 
         
         if( $trackers_expiries ){
             
             foreach($trackers_expiries as $key => $expiry){
-                $client = $expiry->client;
+                $client = $expiry->tracker->client;
+
                 $plate_no = str_replace(' ', '', $expiry->mv_reg_no);
 
                     $replace = [
@@ -80,12 +81,8 @@ class CheckTwoWeeksRemaining extends Command
                         $plate_no, 
                         date('j-M-y', (strtotime($expiry->expiry_time))) 
                     ];
-                    
-
-
                     $sms_body = str_replace($find, $replace, $sms_tpl);
-                    
-
+                      
                    CommonHelpers::sendSms($client->phone_no, $sms_body);
 
                    
