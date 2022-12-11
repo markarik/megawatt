@@ -65,7 +65,7 @@
 		<div class="col-sm-6" >
 			<div class="form-group p-10 border-al border-rounded border-grey" >
 				<h5 class="no-margin-top" >Expiry date</h5>
-				<input type="text" class="form-control" name="expiry_date" value="{{ date('d-m-Y', $tracker->expiry_time) }}" />
+				<input type="text" class="form-control" name="expiry_date" value="{{ \Carbon\Carbon::parse($tracker->expiry_time)->format('d-m-Y')}}" />
 			</div>
 		</div>
 		

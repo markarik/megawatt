@@ -18,6 +18,9 @@
 							Active 
 						@elseif( isset($expired_trackers) && $expired_trackers )
 							Expired 
+
+							@elseif (isset($inactive_trackers) && $inactive_trackers)
+							In-Active
 						@endif
 						Trackers
 					</h3>
@@ -28,6 +31,8 @@
 					<li class="{{ isset($all_trackers) && $all_trackers?'active':'' }}" ><a href="{{ route('trackers') }}" >All</a></li>
 					<li class="{{ isset($active_trackers) && $active_trackers?'active':'' }}" ><a href="{{ route('trackers.active') }}">Active</a></li>
 					<li class="{{ isset($expired_trackers) && $expired_trackers?'active':'' }}" ><a href="{{ route('trackers.expired') }}">Expired</a></li>
+					<li class="{{ isset($inactive_trackers) && $inactive_trackers?'active':'' }}" ><a href="{{ route('trackers.inactive') }}">In-Active</a></li>
+
 				</ul>
 
 			</div>
@@ -88,12 +93,15 @@
 											<td>{{ $tracker->id_no }}</td>
 											<td>{{ $tracker->sim_card_no }}</td>
 											<td>{{ date('d-m-Y', $tracker->init_activation_time) }}</td>
-											<td>{{ date('d-m-Y', $tracker->expiry_time) }}</td>
+											<td>{{ \Carbon\Carbon::parse($tracker->expiry_time)->format('d-m-Y')}}</td>
 											<td>
 												<div class="nowrap" >
-													<button type="button" role="button" class="btn btn-xs btn-theme view-record" data-url="{{ route('tracker.view', $tracker->tracker_id) }}" data-target="#recordViewModal" data-toggle="modal" >View</button>
+													{{-- <button type="button" role="button" class="btn btn-xs btn-theme view-record" data-url="{{ route('tracker.view', $tracker->tracker_id) }}" data-target="#recordViewModal" data-toggle="modal" >View</button> --}}
 													<button type="button" role="button" class="btn btn-xs btn-theme edit-record" data-url="{{ route('tracker.edit', $tracker->tracker_id) }}" data-target="#recordEditModal" data-toggle="modal" >Edit</button>
-													<button type="button" role="button" class="btn btn-xs btn-theme delete-record" data-id="{{ $tracker->tracker_id }}" data-url="{{ route('tracker.delete', $tracker->tracker_id) }}" data-target="#recordDeleteModal" data-toggle="modal" >Delete</button>
+
+											@if (isset($inactive_trackers) && $inactive_trackers)
+											<button type="button" role="button" class="btn btn-xs btn-theme delete-record" data-id="{{ $tracker->tracker_id }}" data-url="{{ route('tracker.delete', $tracker->tracker_id) }}" data-target="#recordDeleteModal" data-toggle="modal" >Delete</button>
+											@endif
 												</div>
 											</td>
 										</tr>
@@ -101,8 +109,7 @@
 
 								@else
 									<tr>
-										<td colspan="8" >
-											<div class="alert alert-info" >No record retrieved.</div>
+												<div class="alert alert-info" >No record retrieved.</div>
 										</td>
 									</tr>
 								@endif

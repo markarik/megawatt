@@ -9,6 +9,9 @@ use DB;
 use App\Models\Client;
 use App\Models\Tracker;
 use App\Models\TrackerExpiry;
+use Carbon\Carbon;
+use App\MyHelpers\CommonHelpers;
+
 
 class TrackerController extends Controller
 {
@@ -110,7 +113,7 @@ class TrackerController extends Controller
 		return view('admin.trackers.index', $view_data);
 	}
 
-	function expired(Request $request){
+	function expired(Request $request){	
 		$expiry_tbl = (new TrackerExpiry())->getTable();
 		$tracker_tbl = $this->tracker->getTable();
 		
@@ -132,6 +135,47 @@ class TrackerController extends Controller
 			'search_context' => $search, 
 			'yearmonth' => $yearmonth, 
 			'expired_trackers' => true, 
+		];
+
+			// dd($view_data);
+
+		return view('admin.trackers.index', $view_data);
+	}
+
+
+	
+
+	function inactive(Request $request){	
+		$expiry_tbl = (new TrackerExpiry())->getTable();
+		$tracker_tbl = $this->tracker->getTable();
+
+		$dt = Carbon::now()->subDays(90);
+        $dateformated = $dt->toDateString();
+
+	
+
+
+
+
+		
+		$model = $this->_filteredTrackersModel($request);
+		$trackers = $model->where($expiry_tbl.'.expiry_time', '<=', CommonHelpers::excelTimeToUnixTime($dateformated))
+			->orderBy($expiry_tbl.'.created_at', 'DESC')
+			->orderBy($expiry_tbl.'.expiry_time', 'DESC')
+			->paginate(20);
+		
+		$search = $request->input('mgwt_search');
+		$yearmonth = $request->input('yearmonth');
+		if( $search ){
+			$trackers->appends(['mgwt_search' => $search]);
+			$trackers->appends(['yearmonth' => $yearmonth]);
+		}
+		
+		$view_data = [
+			'trackers' => $trackers, 
+			'search_context' => $search, 
+			'yearmonth' => $yearmonth, 
+			'inactive_trackers' => true, 
 		];
 		return view('admin.trackers.index', $view_data);
 	}
@@ -206,9 +250,15 @@ class TrackerController extends Controller
 							$tracker->sim_card_no = $request->input('sim_card_no');
 							$tracker->amount = $request->input('amount');
 							$tracker->creation_time = strtotime($request->input('date_created'));
-							// $tracker->activation_time = strtotime($request->input('date_activated'));
-							// $tracker->expiry_time = strtotime($request->input('expiry_date'));
+							$tracker->init_activation_time = strtotime($request->input('date_activated'));
+							$tracker->expiry_time = strtotime($request->input('expiry_date'));
+							$tracker->notification_sent = 0;
+
 							$tracker->save();
+$trackExpr = TrackerExpiry::where('tracker_id','=',$tracker->id)->first();
+
+							$trackExpr->delete();
+
 
 							$tracker_expiry_data = [
 								'user_id' => $user->id, 
@@ -217,6 +267,7 @@ class TrackerController extends Controller
 								'expiry_time' => strtotime($request->input('expiry_date')), 
 							];
 							$tracker_expiry = TrackerExpiry::create($tracker_expiry_data);
+							
 
 							$msg = 'Tracker detail(s) updated successfully';
 							$status = 'success';

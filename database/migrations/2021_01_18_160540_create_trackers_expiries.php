@@ -17,11 +17,10 @@ class CreateTrackersExpiries extends Migration
 
 		Schema::create('trackers_expiries', function (Blueprint $table) use ($notification_enum) {
 			$table->id();
+			$table->integer('user_id')->nullable();
 			$table->integer('tracker_id');
-			$table->integer('user_id');
 			$table->bigInteger('activation_time');
 			$table->bigInteger('expiry_time');
-			$table->enum('notification_type', $notification_enum)->nullable();
 			$table->timestamps();
 		});
 	}

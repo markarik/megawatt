@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function(){
 		Route::get('/', 'TrackerController@index')->name('trackers');
 		Route::get('/active', 'TrackerController@active')->name('trackers.active');
 		Route::get('/expired', 'TrackerController@expired')->name('trackers.expired');
+		Route::get('/inactive', 'TrackerController@inactive')->name('trackers.inactive');
+
 		Route::get('/view/{id}', 'TrackerController@view')->name('tracker.view');
 		Route::get('/edit/{id}', 'TrackerController@edit')->name('tracker.edit');
 		Route::post('/update/{id}', 'TrackerController@update')->name('tracker.update');

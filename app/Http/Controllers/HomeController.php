@@ -14,6 +14,7 @@ use App\Models\Client;
 use App\Models\Tracker;
 use App\Models\TrackerExpiry;
 
+
 use App\MyHelpers\CommonHelpers;
 
 class HomeController extends Controller {
@@ -167,9 +168,14 @@ class HomeController extends Controller {
 								'amount' => strip_tags($row[13]), 
 								'init_activation_time' => CommonHelpers::excelTimeToUnixTime($row[9]), 
 								'creation_time' => CommonHelpers::excelTimeToUnixTime($row[8]), 
-								'expiry_time_old' => CommonHelpers::excelTimeToUnixTime($row[10]), 
+								'expiry_time' => CommonHelpers::excelTimeToUnixTime($row[10]), 
 							];
+
+							// dd($tracker_data);
+
 							$tracker = Tracker::create($tracker_data);
+
+							// dd($tracker);
 							
 							$tracker_expiry_data = [
 								'user_id' => $user->id, 

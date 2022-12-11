@@ -75,18 +75,20 @@
 	<div class="col-sm-6" >
 		<div class="form-group p-10 border-all border-rounded border-grey" >
 			<p class="no-margin-top" >Expiry date</p>
-			<h5 class="no-margin-bottom" >{{ date('d-M-Y', $tracker->expiry_time) }}</h5>
+			<h5 class="no-margin-bottom" >{{ \Carbon\Carbon::parse($tracker->expiry_time)->format('d-m-Y')}}</h5>
+			{{-- <input type="text" class="form-control" name="expiry_date" value="{{ \Carbon\Carbon::parse($tracker->expiry_time)->format('d-m-Y')}}" /> --}}
+
 		</div>
 	</div>
 	
-	@if( $tracker->expiry_time < strtotime('+ 1 month') )
+	{{-- @if( $tracker->expiry_time < strtotime('+ 1 month') ) --}}
 		<div class="col-sm-6" >
 			<div class="form-group p-10 border-all border-rounded border-grey" >
 				<p class="no-margin-top" >Expiry notification</p>
 				<h5 class="no-margin-bottom" >{{ $tracker->notification_sent ? 'Sent':'Not sent' }}</h5>
 			</div>
 		</div>
-	@endif
+	{{-- @endif --}}
 	
 	<div class="col-sm-6" >
 		<div class="form-group p-10 border-all border-rounded border-grey" >
@@ -95,7 +97,7 @@
 		</div>
 	</div>
 
-	@else
+	{{-- @else
 
 		<div class="col-sm-12" >
 			<div class="alert alert-info" >
@@ -103,7 +105,7 @@
 			</div>
 		</div>
 
-	@endif
+	@endif --}}
 	
 </div>
 

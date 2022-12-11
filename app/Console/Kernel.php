@@ -4,8 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
-use App\Crons\SendExpiryNotifications;
+use App\Crons\SendClientBroadcastMessages;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +15,18 @@ class Kernel extends ConsoleKernel
 	 */
 	protected $commands = [
 		
-		Commands\MinuteUpdate::class
+		Commands\PastExpiryByADay::class,
+		Commands\CheckTwoWeeksRemaining::class,
+		Commands\CheckOneDayRemaining::class,
+		Commands\CheckallExpiredTrackers::class,
+		Commands\SendMessagesToAgents::class,
+		Commands\SendMessagesToClients::class,
+		Commands\TopupNotification::class,
+
+
+
+		
+
 
 	];
 
@@ -28,14 +38,37 @@ class Kernel extends ConsoleKernel
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		// $schedule->command('inspire')->hourly();
-		// $schedule->call(new SendExpiryNotifications)
-		// 	->everyTenMinutes()
-		// 	// ->everyMinute()
-		// 	->between('8:00', '17:00')
-		// 	->timezone('Africa/Nairobi');
-		$schedule->command('minute:expire')
-		->everyMinute();
+		
+
+		$schedule->command('daily:remain-two-weeks')
+		->dailyAt('11:00')->withoutOverlapping(20);
+		
+		$schedule->command('daily:remain-one-Day')
+		->dailyAt('13:00')->withoutOverlapping(20);
+		
+		$schedule->command('daily:checkExpired')
+		->dailyAt('00:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:past-expiry-by-a-day')
+		->dailyAt('07:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:send-top-up-notification')
+		->dailyAt('09:00')->withoutOverlapping(20);
+
+
+		$schedule->command('daily:send-clients-messages')
+		->everyThirtyMinutes()->between('07:00', '15:00')
+		->withoutOverlapping(20);
+
+		$schedule->command('daily:send-agents-messages')
+		->everyThirtyMinutes()->between('07:00', '15:00')
+		->withoutOverlapping(20);
+
+		
+		
+
+
+
 
 	}
 
