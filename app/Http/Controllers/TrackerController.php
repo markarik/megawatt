@@ -180,27 +180,34 @@ class TrackerController extends Controller
 		return view('admin.trackers.index', $view_data);
 	}
 
-	function view(Request $request, $id){
-		if( $request->ajax() ){
-			$tracker_tbl = $this->tracker->getTable();
-			$expiry_tbl = (new TrackerExpiry())->getTable();
+	// function view(Request $request, $id){
+
+
+	// 	// dd($id);
+
+	// 	if( $request->ajax() ){
+	// 		$tracker_tbl = $this->tracker->getTable();
+	// 		$expiry_tbl = (new TrackerExpiry())->getTable();
 			
-			$tracker = $this->tracker->join($expiry_tbl, $tracker_tbl.'.id', '=', $expiry_tbl.'.tracker_id')
-				->select($tracker_tbl.'.*', $expiry_tbl.'.*')
-				->where($tracker_tbl.'.id', '=', $id)
-				->orderBy($expiry_tbl.'.id', 'DESC')
-				->first();
+	// 		$tracker = $this->tracker->join($expiry_tbl, $tracker_tbl.'.id', '=', $expiry_tbl.'.tracker_id')
+	// 			->select($tracker_tbl.'.*', $expiry_tbl.'.*')
+	// 			->where($tracker_tbl.'.id', '=', $id)
+	// 			->orderBy($expiry_tbl.'.id', 'DESC')
+	// 			->first();
 			
-			$view_data = [
-				'tracker' => $tracker, 
-			];
-			return view('admin.trackers.view', $view_data);
-		}else{
-			return redirect()->route('trackers');
-		}
-	}
+	// 		$view_data = [
+	// 			'tracker' => $tracker, 
+	// 		];
+	// 		echo "view_data[0]->tracker->mv_reg_no";
+
+	// 		return view('admin.trackers.view', $view_data);
+	// 	}else{
+	// 		return redirect()->route('trackers');
+	// 	}
+	// }
 	
-	function edit(Request $request, $id){
+	function view(Request $request, $id){
+		
 		if( $request->ajax() ){
 			$tracker_tbl = $this->tracker->getTable();
 			$expiry_tbl = (new TrackerExpiry())->getTable();
@@ -214,6 +221,31 @@ class TrackerController extends Controller
 			$view_data = [
 				'tracker' => $tracker, 
 			];
+
+			return view('admin.trackers.view', $view_data);
+		}else{
+			return redirect()->route('trackers');
+		}
+	}
+
+
+
+	function edit(Request $request, $id){
+		
+		if( $request->ajax() ){
+			$tracker_tbl = $this->tracker->getTable();
+			$expiry_tbl = (new TrackerExpiry())->getTable();
+			
+			$tracker = $this->tracker->join($expiry_tbl, $tracker_tbl.'.id', '=', $expiry_tbl.'.tracker_id')
+				->select($expiry_tbl.'.*', $tracker_tbl.'.*')
+				->where($tracker_tbl.'.id', '=', $id)
+				->orderBy($expiry_tbl.'.id', 'DESC')
+				->first();
+			
+			$view_data = [
+				'tracker' => $tracker, 
+			];
+
 			return view('admin.trackers.edit', $view_data);
 		}else{
 			return redirect()->route('trackers');

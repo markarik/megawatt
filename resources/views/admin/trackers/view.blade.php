@@ -1,6 +1,6 @@
 <div class="row" >
 
-	@if( $tracker )
+	{{-- @if( $tracker ) --}}
 
 	<div class="col-sm-6" >
 		<div class="form-group p-10 border-all border-rounded border-grey" >
@@ -82,12 +82,12 @@
 	</div>
 	
 	{{-- @if( $tracker->expiry_time < strtotime('+ 1 month') ) --}}
-		<div class="col-sm-6" >
+		{{-- <div class="col-sm-6" >
 			<div class="form-group p-10 border-all border-rounded border-grey" >
 				<p class="no-margin-top" >Expiry notification</p>
 				<h5 class="no-margin-bottom" >{{ $tracker->notification_sent ? 'Sent':'Not sent' }}</h5>
 			</div>
-		</div>
+		</div> --}}
 	{{-- @endif --}}
 	
 	<div class="col-sm-6" >
