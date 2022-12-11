@@ -55,20 +55,14 @@ class Kernel extends ConsoleKernel
 		$schedule->command('daily:send-top-up-notification')
 		->dailyAt('09:00')->withoutOverlapping(20);
 
-		
 
+		$schedule->command('daily:send-clients-messages')
+		->everyThirtyMinutes()->between('07:00', '15:00')
+		->withoutOverlapping(20);
 
-		
-
-
-
-
-
-		// $schedule->command('daily:send-clients-messages')
-		// ->dailyAt('10:00')->withoutOverlapping(20);
-
-		// $schedule->command('daily:send-agents-messages')
-		// ->dailyAt('08:00')->withoutOverlapping(20);
+		$schedule->command('daily:send-agents-messages')
+		->everyThirtyMinutes()->between('07:00', '15:00')
+		->withoutOverlapping(20);
 
 		
 		

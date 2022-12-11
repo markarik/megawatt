@@ -52,10 +52,12 @@ class SendMessagesToAgents extends Command
 
 				$sms_body = str_replace($find, $replace, $message->message);
 
-				CommonHelpers::sendSms($agent->ref_no, $sms_body);
-				
+				$sent = CommonHelpers::sendSms($agent->ref_no, $sms_body);
+				if ($sent) {
+                
 				$unsent_broadcast->status = 1;
 				$unsent_broadcast->save();
+                }
 			}
 		}
     }

@@ -52,9 +52,15 @@ class SendMessagesToClients extends Command
 
 				$replace = [$client->name, $client->phone_no];
 				$sms_body = str_replace($find, $replace, $message->message);
-				CommonHelpers::sendSms($client->phone_no, $sms_body);				
-				$unsent_broadcast->status = 1;
-				$unsent_broadcast->save();
+				$sent = CommonHelpers::sendSms($client->phone_no, $sms_body);	
+
+                $this->info($sent);
+                
+                if ($sent) {
+                
+                    $unsent_broadcast->status = 1;
+                    $unsent_broadcast->save();
+                    }
 			}
 		}
     }
