@@ -6,9 +6,6 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Crons\SendClientBroadcastMessages;
 
-
-
-
 class Kernel extends ConsoleKernel
 {
 	/**
@@ -24,6 +21,8 @@ class Kernel extends ConsoleKernel
 		Commands\CheckallExpiredTrackers::class,
 		Commands\SendMessagesToAgents::class,
 		Commands\SendMessagesToClients::class,
+		Commands\TopupNotification::class,
+
 
 
 		
@@ -53,12 +52,23 @@ class Kernel extends ConsoleKernel
 		$schedule->command('daily:past-expiry-by-a-day')
 		->dailyAt('07:00')->withoutOverlapping(20);
 
-		
-		$schedule->command('daily:send-clients-messages')
-		->dailyAt('10:00')->withoutOverlapping(20);
+		$schedule->command('daily:send-top-up-notification')
+		->dailyAt('09:00')->withoutOverlapping(20);
 
-		$schedule->command('daily:send-agents-messages')
-		->dailyAt('08:00')->withoutOverlapping(20);
+		
+
+
+		
+
+
+
+
+
+		// $schedule->command('daily:send-clients-messages')
+		// ->dailyAt('10:00')->withoutOverlapping(20);
+
+		// $schedule->command('daily:send-agents-messages')
+		// ->dailyAt('08:00')->withoutOverlapping(20);
 
 		
 		

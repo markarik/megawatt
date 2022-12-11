@@ -153,19 +153,7 @@ class TrackerController extends Controller
         $dateformated = $dt->toDateString();
 
 	
-// $dddata = [
-// "now" => time(),
-// "dateFormatted"=>$dateformated,
-// "gggdate "=> date("d-m-Y", time()),
-// "coom"=>CommonHelpers::excelTimeToUnixTime("8-12-2022"),
-// "isCheck" => time() == CommonHelpers::excelTimeToUnixTime("8-12-2022"),
-// "agai"=>date("d-m-Y", CommonHelpers::excelTimeToUnixTime("8-12-2022")),
-// "dt"=>$dt,
 
-// 	];
-	
-
-// 	dd($dddata);
 
 
 
@@ -262,7 +250,7 @@ class TrackerController extends Controller
 							$tracker->sim_card_no = $request->input('sim_card_no');
 							$tracker->amount = $request->input('amount');
 							$tracker->creation_time = strtotime($request->input('date_created'));
-							// $tracker->activation_time = strtotime($request->input('date_activated'));
+							$tracker->init_activation_time = strtotime($request->input('date_activated'));
 							$tracker->expiry_time = strtotime($request->input('expiry_date'));
 							$tracker->notification_sent = 0;
 

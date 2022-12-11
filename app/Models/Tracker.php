@@ -27,7 +27,11 @@ class Tracker extends Model
 	
 	/* Casting the expiry_time column to a date format. */
 protected $casts = [
-        'expiry_time' => 'date:Y-m-d'
+        'expiry_time' => 'date:Y-m-d',
+		// 'init_activation_time' => 'date:Y-m-d',
+
+
+		
     ];
 	
 	protected $expiry_model;
