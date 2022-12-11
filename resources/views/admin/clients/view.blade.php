@@ -77,8 +77,9 @@
 														<td>{!! $tracker->mv_reg_no !!}</td>
 														<td>{{ $tracker->id_no }}</td>
 														<td>{{ $tracker->sim_card_no }}</td>
-														<td>{{ date('d-m-Y', $tracker->init_activation_time) }}</td>
-														<td>{{ date('d-m-Y', $tracker->getExpiryTime()) }}</td>
+														<td>{{ \Carbon\Carbon::parse($tracker->init_activation_time)->format('d-m-Y')}}</td>
+														<td>{{ \Carbon\Carbon::parse($tracker->getExpiryTime())->format('d-m-Y')}}</td>
+
 													</tr>
 												@endforeach
 											@else
