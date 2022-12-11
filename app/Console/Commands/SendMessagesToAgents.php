@@ -40,7 +40,8 @@ class SendMessagesToAgents extends Command
     public function handle()
     {
         $unsent_broadcasts = AgentBroadcastNotification::where('status', 0)->limit(10)->get();
-		
+        $this->info($unsent_broadcasts);
+
 		if( $unsent_broadcasts ){
 			$find = ['#name', '#phone'];
 
@@ -53,6 +54,7 @@ class SendMessagesToAgents extends Command
 				$sms_body = str_replace($find, $replace, $message->message);
 
 				$sent = CommonHelpers::sendSms($agent->ref_no, $sms_body);
+                $this->info($sent);
 				if ($sent) {
                 
 				$unsent_broadcast->status = 1;
