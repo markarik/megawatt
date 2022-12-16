@@ -25,7 +25,7 @@ class TopupNotification extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command to notify top up';
 
     /**
      * Create a new command instance.
