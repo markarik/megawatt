@@ -25,7 +25,7 @@ class TopupNotification extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command to notify top up';
 
     /**
      * Create a new command instance.
@@ -52,49 +52,48 @@ class TopupNotification extends Command
             ->get();  
 
 
+
 			foreach($client_trackers as $key => $expiry){
 
                 $client = $expiry->client;
 
-                if ($client->type == "GX805S" ) {
-                    $sms_tpl = 'Hello #client_name,' . "\r\n";
-                    $sms_tpl .= 'Gsm line: #sim_card,' . "\r\n";
+                // if ($client->type == "GX805S" ) {
+                //     $sms_tpl = 'Hello #client_name,' . "\r\n";
+                //     $sms_tpl .= 'Gsm line: #sim_card,' . "\r\n";
             
-                    $sms_tpl .= 'Kindly top up the number above with both '. "\r\n";
-                    $sms_tpl .= '- 50 bob airtime '. "\r\n";
-                    $sms_tpl .= '- 50 no expiry data bundles. '. "\r\n";
-                    $sms_tpl .= 'To continue enjoying the tracking services'. "\r\n";
+                //     $sms_tpl .= 'Kindly top up the number above with both '. "\r\n";
+                //     $sms_tpl .= '- 50 bob airtime '. "\r\n";
+                //     $sms_tpl .= '- 50 no expiry data bundles. '. "\r\n";
+                //     $sms_tpl .= 'To continue enjoying the tracking services'. "\r\n";
             
-                    $find = ['#client_name', '#sim_card'];
+                //     $find = ['#client_name', '#sim_card'];
 
 
 
-                    $replace = [
-                        explode(' ', ucfirst(strtolower($client->name)))[0], 
-                        $expiry->sim_card_no, 
+                //     $replace = [
+                //         explode(' ', ucfirst(strtolower($client->name)))[0], 
+                //         $expiry->sim_card_no, 
                         
-                    ];
-                    $sms_body = str_replace($find, $replace, $sms_tpl);
-                    $sent = CommonHelpers::sendSms($client->phone_no, $sms_body);
-                    if ($sent) {
-                        $this->postNewDates($expiry);
-                    }
+                //     ];
+                //     $sms_body = str_replace($find, $replace, $sms_tpl);
+                //     $sent = CommonHelpers::sendSms($client->phone_no, $sms_body);
+                //     if ($sent) {
+                //         $this->postNewDates($expiry);
+                //     }
                     
-                } else {
-                    $sys_paybill = env('SYS_PAYBILL');
+                // } else {
                     $sys_phone_numbers = env('SYS_PHONE_NUMBERS');
             
-                    $sms_tpl = 'Hello #client_name,' . "\r\n";
-                    $sms_tpl .= 'Your vehicle #car_plate '. "\r\n";
-                    $sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
-                    $sms_tpl .= 'Acc No: #car_plate' . "\r\n";
+                    $sms_tpl = 'Dear #client_name,' . "\r\n";
 
-                    $sms_tpl .= 'Kindly top up your credit using the paybill provided and Vehicle number as the account Number '. "\r\n";
-                    $sms_tpl .= 'with - 105 bob airtime '. "\r\n";
+                    $sms_tpl .= 'Top up #car_plate no, #tracker line with airtime and non-expiry data bundles to enjoy your tracking experience. '. "\r\n";
 
-                    $sms_tpl .= 'Call us on ' . $sys_phone_numbers;
+                    $sms_tpl .= 'MTL call center ' . $sys_phone_numbers;
+
+
+
                     
-                    $find = ['#client_name', '#car_plate'];
+                    $find = ['#client_name', '#car_plate','#tracker'];
 
 
 
@@ -103,6 +102,8 @@ class TopupNotification extends Command
                     $replace = [
                         explode(' ', ucfirst(strtolower($client->name)))[0], 
                         $plate_no, 
+                        $expiry->id_no
+                        
                     ];
                     $sms_body = str_replace($find, $replace, $sms_tpl);
                     $sent = CommonHelpers::sendSms($client->phone_no, $sms_body);
@@ -112,7 +113,7 @@ class TopupNotification extends Command
                         $this->postNewDates($expiry);
                     }
             
-                }
+                // }
                 
 
 

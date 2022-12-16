@@ -7,22 +7,21 @@ use Carbon\Carbon;
 use App\MyHelpers\CommonHelpers;
 use App\Models\TrackerExpiry;
 
-
-class CheckTwoWeeksRemaining extends Command
+class CheckOneWeekToExpiry extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'daily:remain-two-weeks';
+    protected $signature = 'daily:remain-one-week';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command used to check  trackers that are 2 weeks to expire  and save it to the tracker expirely section';
+    protected $description = 'Command used to check  trackers that are 1 week to expire  and save it to the tracker expirely section';
 
     /**
      * Create a new command instance.
@@ -41,9 +40,8 @@ class CheckTwoWeeksRemaining extends Command
      */
     public function handle()
     {
-        $dt = Carbon::now()->addWeeks(2);
+        $dt = Carbon::now()->addWeek();
         $dateformated = $dt->toDateString();
-
 
         $sys_paybill = env('SYS_PAYBILL');
         $sys_phone_numbers = env('SYS_PHONE_NUMBERS');

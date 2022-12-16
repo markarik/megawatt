@@ -2,29 +2,26 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TrackerExpiry;
-
-use App\MyHelpers\CommonHelpers;
-
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use App\MyHelpers\CommonHelpers;
+use App\Models\TrackerExpiry;
 
-
-class PastExpiryByADay extends Command
+class CheckExpiryAfterOneWeek extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'daily:past-expiry-by-a-day';
+    protected $signature = 'daily:past-one-week';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send Notifications to users to notify their subscriptions is expired.Past one day';
+    protected $description = 'Command to send notification of expiry past one week';
 
     /**
      * Create a new command instance.
@@ -41,12 +38,9 @@ class PastExpiryByADay extends Command
      *
      * @return int
      */
-
-
-	public function handle(){
-		$dt = Carbon::now()->subDay();
+    public function handle(){
+		$dt = Carbon::now()->subWeek();
 		$dateformated = $dt->toDateString();
-
 
 
 			$sys_paybill = env('SYS_PAYBILL');
@@ -54,7 +48,7 @@ class PastExpiryByADay extends Command
 
 			
 			$sms_tpl = 'Dear #client_name,' . "\r\n";
-			$sms_tpl .= 'Your vehicle #car_plate, tracking will expired on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
+			$sms_tpl .= 'Your vehicle #car_plate, tracking  expired on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
 			$sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
 			$sms_tpl .= 'Acc No: #car_plate' . "\r\n";
 			$sms_tpl .= 'Amount: #renewal_rate' . "\r\n";
@@ -99,7 +93,4 @@ class PastExpiryByADay extends Command
 			}
 		
 	}
-
-
-
 }

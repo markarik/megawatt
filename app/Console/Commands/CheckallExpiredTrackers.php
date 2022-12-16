@@ -51,14 +51,19 @@ class CheckallExpiredTrackers extends Command
         $sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 
 
-        $sms_tpl = 'Hello #client_name,' . "\r\n";
-        $sms_tpl .= 'Your vehicle #car_plate annual tracking  fee will expire in 30 days time on '.$dateformated . "\r\n";
+        $sms_tpl = 'Dear #client_name,' . "\r\n";
+        $sms_tpl .= 'Your vehicle #car_plate, tracking will expire on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
         $sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
         $sms_tpl .= 'Acc No: #car_plate' . "\r\n";
-        $sms_tpl .= 'Make plans to topup your subscription to continue enjoying your tracking experience.' . "\r\n";
-        $sms_tpl .= 'Call us on ' . $sys_phone_numbers;
+        $sms_tpl .= 'Amount: #renewal_rate' . "\r\n";
+        $sms_tpl .= 'To continue enjoying your tracking experience '. "\r\n";
+
+
+        $sms_tpl .= 'MTL call center ' . $sys_phone_numbers;
+
+
         
-        $find = ['#client_name', '#renewal_rate', '#car_plate', '#expiry_date'];
+        $find = ['#client_name', '#renewal_rate', '#car_plate'];
 
 
 
@@ -66,7 +71,8 @@ class CheckallExpiredTrackers extends Command
     $trackers_expiries = Tracker::with('client')
     ->where('notification_sent','=',0)    
     -> where('expiry_time','=', CommonHelpers::excelTimeToUnixTime($dateformated))
-    ->get();        
+    ->get();    
+    
         if( $trackers_expiries ){
             
             foreach($trackers_expiries as $key => $expiry){

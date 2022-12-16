@@ -150,7 +150,7 @@ class TrackerController extends Controller
 		$expiry_tbl = (new TrackerExpiry())->getTable();
 		$tracker_tbl = $this->tracker->getTable();
 
-		$dt = Carbon::now()->subDays(90);
+		$dt = Carbon::now()->subMonths(3);
         $dateformated = $dt->toDateString();
 
 	
