@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Crons\SendClientBroadcastMessages;
+use Psy\TabCompletion\Matcher\CommandsMatcher;
 
 class Kernel extends ConsoleKernel
 {
@@ -22,6 +23,10 @@ class Kernel extends ConsoleKernel
 		Commands\SendMessagesToAgents::class,
 		Commands\SendMessagesToClients::class,
 		Commands\TopupNotification::class,
+		Commands\CheckDomantAccountNotification::class,
+		Commands\CheckExpiryAfterOneWeek::class,
+		Commands\CheckExpiryAfterSecondMonth::class,
+		Commands\CheckSameDayExpiry::class,
 
 
 
@@ -54,6 +59,29 @@ class Kernel extends ConsoleKernel
 
 		$schedule->command('daily:send-top-up-notification')
 		->dailyAt('09:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:send-domant-account')
+		->dailyAt('10:00')->withoutOverlapping(20);
+
+
+		$schedule->command('daily:past-one-week')
+		->dailyAt('11:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:remain-one-weeks')
+		->dailyAt('12:00')->withoutOverlapping(20);
+
+
+		$schedule->command('daily:same-day-expiry')
+		->dailyAt('13:00')->withoutOverlapping(20);
+
+		
+		
+		
+
+
+
+
+
 
 
 		$schedule->command('daily:send-clients-messages')

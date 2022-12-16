@@ -2,29 +2,26 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TrackerExpiry;
-
-use App\MyHelpers\CommonHelpers;
-
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use App\MyHelpers\CommonHelpers;
+use App\Models\TrackerExpiry;
 
-
-class PastExpiryByADay extends Command
+class CheckExpiryAfterOneWeek extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'daily:past-expiry-by-a-day';
+    protected $signature = 'daily:past-one-week';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send Notifications to users to notify their subscriptions is expired.Past one day';
+    protected $description = 'Command to send notification of expiry past one week';
 
     /**
      * Create a new command instance.
@@ -41,10 +38,8 @@ class PastExpiryByADay extends Command
      *
      * @return int
      */
-
-
-	public function handle(){
-		$dt = Carbon::now()->subDay();
+    public function handle(){
+		$dt = Carbon::now()->subWeek();
 		$dateformated = $dt->toDateString();
 
 
@@ -98,7 +93,4 @@ class PastExpiryByADay extends Command
 			}
 		
 	}
-
-
-
 }

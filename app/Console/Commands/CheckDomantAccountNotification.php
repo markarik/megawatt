@@ -2,29 +2,26 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TrackerExpiry;
-
-use App\MyHelpers\CommonHelpers;
-
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use App\MyHelpers\CommonHelpers;
+use App\Models\TrackerExpiry;
 
-
-class PastExpiryByADay extends Command
+class CheckDomantAccountNotification extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'daily:past-expiry-by-a-day';
+    protected $signature = 'daily:send-domant-account';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send Notifications to users to notify their subscriptions is expired.Past one day';
+    protected $description = 'Send notifiication once the account is Dormant';
 
     /**
      * Create a new command instance.
@@ -41,30 +38,24 @@ class PastExpiryByADay extends Command
      *
      * @return int
      */
-
-
-	public function handle(){
-		$dt = Carbon::now()->subDay();
+    public function handle(){
+		$dt = Carbon::now()->subMonths(3);
 		$dateformated = $dt->toDateString();
 
 
-			$sys_paybill = env('SYS_PAYBILL');
 			$sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 
-			
+
 			$sms_tpl = 'Dear #client_name,' . "\r\n";
-			$sms_tpl .= 'Your vehicle #car_plate, tracking will expire on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
-			$sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
-			$sms_tpl .= 'Acc No: #car_plate' . "\r\n";
-			$sms_tpl .= 'Amount: #renewal_rate' . "\r\n";
-			$sms_tpl .= 'To continue enjoying your tracking experience '. "\r\n";
+			$sms_tpl .= 'Kindly note your vehicle #car_plate, tracking has expired and moved to dormant.'. "\r\n";
+		
 	
 	
 			$sms_tpl .= 'MTL call center ' . $sys_phone_numbers;
 	
 	
 			
-			$find = ['#client_name', '#renewal_rate', '#car_plate'];
+			$find = ['#client_name', '#car_plate'];
 	
 
 		
@@ -98,7 +89,4 @@ class PastExpiryByADay extends Command
 			}
 		
 	}
-
-
-
 }

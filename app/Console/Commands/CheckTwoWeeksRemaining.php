@@ -47,15 +47,19 @@ class CheckTwoWeeksRemaining extends Command
         $sys_paybill = env('SYS_PAYBILL');
         $sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 
-
-        $sms_tpl = 'Hello #client_name,' . "\r\n";
-        $sms_tpl .= 'Your vehicle #car_plate annual tracking  fee will expire in 14 days time on '.$dateformated . "\r\n";
+        $sms_tpl = 'Dear #client_name,' . "\r\n";
+        $sms_tpl .= 'Your vehicle #car_plate, tracking will expire on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
         $sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
         $sms_tpl .= 'Acc No: #car_plate' . "\r\n";
-        $sms_tpl .= 'Make plans to topup your subscription to continue enjoying your tracking experience.' . "\r\n";
-        $sms_tpl .= 'Call us on ' . $sys_phone_numbers;
+        $sms_tpl .= 'Amount: #renewal_rate' . "\r\n";
+        $sms_tpl .= 'To continue enjoying your tracking experience '. "\r\n";
+
+
+        $sms_tpl .= 'MTL call center ' . $sys_phone_numbers;
+
+
         
-        $find = ['#client_name', '#renewal_rate', '#car_plate', '#expiry_date'];
+        $find = ['#client_name', '#renewal_rate', '#car_plate'];
 
 
     $trackers_expiries = TrackerExpiry::with('tracker.client')
