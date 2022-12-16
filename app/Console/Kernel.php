@@ -47,68 +47,45 @@ class Kernel extends ConsoleKernel
 	protected function schedule(Schedule $schedule)
 	{
 		
-
-		
-		
-
-
-
-
-
-
-
-
-		
-		
-		$schedule->command('daily:checkExpired')
-		->dailyAt('00:00')->withoutOverlapping(20);
-
-		$schedule->command('daily:send-domant-account')
-		->dailyAt('10:00')->withoutOverlapping(20);
-
-		$schedule->command('daily:past-one-week')
-		->dailyAt('11:00')->withoutOverlapping(20);
-
-		$schedule->command('daily:expirye-after-2-months')
-		->dailyAt('14:00')->withoutOverlapping(20);
-
-		$schedule->command('daily:remain-one-Day')
-		->dailyAt('13:00')->withoutOverlapping(20);
-		
-		$schedule->command('daily:remain-one-weeks')
-		->dailyAt('12:00')->withoutOverlapping(20);
-
-
-		$schedule->command('daily:same-day-expiry')
-		->dailyAt('13:00')->withoutOverlapping(20);
-
-		
-		$schedule->command('daily:remain-two-weeks')
-		->dailyAt('15:00')->withoutOverlapping(20);
-		
-		$schedule->command('daily:past-expiry-by-a-day')
-		->dailyAt('07:00')->withoutOverlapping(20);
-
-		$schedule->command('daily:send-top-up-notification')
-		->dailyAt('09:00')->withoutOverlapping(20);
-
-
-
-
-
+       
 
 
 		$schedule->command('daily:send-clients-messages')
 		->everyThirtyMinutes()->between('07:00', '15:00')
 		->withoutOverlapping(20);
 
-		$schedule->command('daily:send-agents-messages')
+        $schedule->command('daily:send-agents-messages')
 		->everyThirtyMinutes()->between('07:00', '15:00')
 		->withoutOverlapping(20);
 
+		$schedule->command('daily:send-top-up-notification')
+		->dailyAt('09:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:past-expiry-by-a-day')
+		->dailyAt('07:00')->withoutOverlapping(20);
+		$schedule->command('daily:remain-two-weeks')
+		->dailyAt('15:00')->withoutOverlapping(20);
 		
+		$schedule->command('daily:same-day-expiry')
+		->dailyAt('09:45')->withoutOverlapping(20);
+		$schedule->command('daily:remain-one-week')
+		->dailyAt('12:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:remain-one-Day')
+		->dailyAt('13:00')->withoutOverlapping(20);
+		
+		$schedule->command('daily:expiry-after-2-months')
+		->dailyAt('14:00')->withoutOverlapping(20);
+       
+		$schedule->command('daily:past-one-week')
+		->dailyAt('11:00')->withoutOverlapping(20);
 		
 
+        $schedule->command('daily:send-domant-account')
+		->dailyAt('10:00')->withoutOverlapping(20);
+
+		$schedule->command('daily:checkExpired')
+		->dailyAt('00:00')->withoutOverlapping(20);
 
 
 

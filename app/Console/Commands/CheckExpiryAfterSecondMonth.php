@@ -14,14 +14,14 @@ class CheckExpiryAfterSecondMonth extends Command
      *
      * @var string
      */
-    protected $signature = 'daily:expirye-after-2-months';
+    protected $signature = 'daily:expiry-after-2-months';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Notification after 2 months expirey';
+    protected $description = 'Notification past 2 months of expiring ';
 
     /**
      * Create a new command instance.

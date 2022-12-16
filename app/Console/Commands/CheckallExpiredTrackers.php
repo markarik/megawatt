@@ -71,7 +71,8 @@ class CheckallExpiredTrackers extends Command
     $trackers_expiries = Tracker::with('client')
     ->where('notification_sent','=',0)    
     -> where('expiry_time','=', CommonHelpers::excelTimeToUnixTime($dateformated))
-    ->get();        
+    ->get();    
+    
         if( $trackers_expiries ){
             
             foreach($trackers_expiries as $key => $expiry){

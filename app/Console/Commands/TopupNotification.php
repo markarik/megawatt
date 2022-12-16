@@ -52,6 +52,7 @@ class TopupNotification extends Command
             ->get();  
 
 
+
 			foreach($client_trackers as $key => $expiry){
 
                 $client = $expiry->client;
@@ -101,7 +102,8 @@ class TopupNotification extends Command
                     $replace = [
                         explode(' ', ucfirst(strtolower($client->name)))[0], 
                         $plate_no, 
-                        $client->id_no
+                        $expiry->id_no
+                        
                     ];
                     $sms_body = str_replace($find, $replace, $sms_tpl);
                     $sent = CommonHelpers::sendSms($client->phone_no, $sms_body);

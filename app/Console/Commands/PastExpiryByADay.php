@@ -48,12 +48,13 @@ class PastExpiryByADay extends Command
 		$dateformated = $dt->toDateString();
 
 
+
 			$sys_paybill = env('SYS_PAYBILL');
 			$sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 
 			
 			$sms_tpl = 'Dear #client_name,' . "\r\n";
-			$sms_tpl .= 'Your vehicle #car_plate, tracking will expire on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
+			$sms_tpl .= 'Your vehicle #car_plate, tracking will expired on  '.$dateformated . ' Renew your yearly subscription to:- '. "\r\n";
 			$sms_tpl .= 'Paybill: ' . $sys_paybill . "\r\n";
 			$sms_tpl .= 'Acc No: #car_plate' . "\r\n";
 			$sms_tpl .= 'Amount: #renewal_rate' . "\r\n";

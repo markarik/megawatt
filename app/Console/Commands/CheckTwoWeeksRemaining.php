@@ -44,6 +44,7 @@ class CheckTwoWeeksRemaining extends Command
         $dt = Carbon::now()->addWeeks(2);
         $dateformated = $dt->toDateString();
 
+
         $sys_paybill = env('SYS_PAYBILL');
         $sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 

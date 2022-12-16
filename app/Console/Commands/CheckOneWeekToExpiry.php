@@ -14,7 +14,7 @@ class CheckOneWeekToExpiry extends Command
      *
      * @var string
      */
-    protected $signature = 'daily:remain-one-weeks';
+    protected $signature = 'daily:remain-one-week';
 
     /**
      * The console command description.

@@ -42,6 +42,9 @@ class CheckOneDayRemaining extends Command
     {
         $dt = Carbon::now()->addDay();
         $dateformated = $dt->toDateString();
+
+        $this->info($dateformated);
+
         $sys_paybill = env('SYS_PAYBILL');
         $sys_phone_numbers = env('SYS_PHONE_NUMBERS');
 
@@ -63,7 +66,8 @@ class CheckOneDayRemaining extends Command
        
               $trackers_expiries = TrackerExpiry::with('tracker.client')    
     -> where('expiry_time', '=', CommonHelpers::excelTimeToUnixTime($dateformated))    
-    ->get();        
+    ->get(); 
+       
         if( $trackers_expiries ){            
             foreach($trackers_expiries as $key => $expiry){
                 $client = $expiry->tracker->client;
