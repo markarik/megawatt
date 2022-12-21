@@ -84,7 +84,6 @@ class TrackerController extends Controller
 			'yearmonth' => $yearmonth, 
 			'all_trackers' => true, 
 		];
-		// dd($view_data);
 
 		return view('admin.trackers.index', $view_data);
 	}
@@ -116,11 +115,17 @@ class TrackerController extends Controller
 	}
 
 	function expired(Request $request){	
+		$dt = Carbon::now()->subMonths(3);
+        $dateformated = $dt->toDateString();
+
+// dd(CommonHelpers::excelTimeToUnixTime($dateformated));
+	
 		$expiry_tbl = (new TrackerExpiry())->getTable();
 		$tracker_tbl = $this->tracker->getTable();
 		
 		$model = $this->_filteredTrackersModel($request);
-		$trackers = $model->where($expiry_tbl.'.expiry_time', '<', time())
+		$trackers = $model->where($expiry_tbl.'.expiry_time', '>', CommonHelpers::excelTimeToUnixTime($dateformated))
+		     ->where($expiry_tbl.'.expiry_time', '<', time())
 			->orderBy($expiry_tbl.'.created_at', 'DESC')
 			->orderBy($expiry_tbl.'.expiry_time', 'DESC')
 			->paginate(20);
@@ -146,7 +151,7 @@ class TrackerController extends Controller
 
 	
 
-	function inactive(Request $request){	
+	function dormant(Request $request){	
 		$expiry_tbl = (new TrackerExpiry())->getTable();
 		$tracker_tbl = $this->tracker->getTable();
 
@@ -181,31 +186,7 @@ class TrackerController extends Controller
 		return view('admin.trackers.index', $view_data);
 	}
 
-	// function view(Request $request, $id){
-
-
-	// 	// dd($id);
-
-	// 	if( $request->ajax() ){
-	// 		$tracker_tbl = $this->tracker->getTable();
-	// 		$expiry_tbl = (new TrackerExpiry())->getTable();
-			
-	// 		$tracker = $this->tracker->join($expiry_tbl, $tracker_tbl.'.id', '=', $expiry_tbl.'.tracker_id')
-	// 			->select($tracker_tbl.'.*', $expiry_tbl.'.*')
-	// 			->where($tracker_tbl.'.id', '=', $id)
-	// 			->orderBy($expiry_tbl.'.id', 'DESC')
-	// 			->first();
-			
-	// 		$view_data = [
-	// 			'tracker' => $tracker, 
-	// 		];
-	// 		echo "view_data[0]->tracker->mv_reg_no";
-
-	// 		return view('admin.trackers.view', $view_data);
-	// 	}else{
-	// 		return redirect()->route('trackers');
-	// 	}
-	// }
+	
 	
 	function view(Request $request, $id){
 		
