@@ -31,7 +31,7 @@
 					<li class="{{ isset($all_trackers) && $all_trackers?'active':'' }}" ><a href="{{ route('trackers') }}" >All</a></li>
 					<li class="{{ isset($active_trackers) && $active_trackers?'active':'' }}" ><a href="{{ route('trackers.active') }}">Active</a></li>
 					<li class="{{ isset($expired_trackers) && $expired_trackers?'active':'' }}" ><a href="{{ route('trackers.expired') }}">Expired</a></li>
-					<li class="{{ isset($inactive_trackers) && $inactive_trackers?'active':'' }}" ><a href="{{ route('trackers.inactive') }}">Dormant</a></li>
+					<li class="{{ isset($inactive_trackers) && $inactive_trackers?'active':'' }}" ><a href="{{ route('trackers.dormant') }}">Dormant</a></li>
 
 				</ul>
 
