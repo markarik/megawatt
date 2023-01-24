@@ -99,9 +99,9 @@
 													<button type="button" role="button" class="btn btn-xs btn-theme view-record" data-url="{{ route('tracker.view', $tracker->tracker_id) }}" data-target="#recordViewModal" data-toggle="modal" >View</button>
 													<button type="button" role="button" class="btn btn-xs btn-theme edit-record" data-url="{{ route('tracker.edit', $tracker->tracker_id) }}" data-target="#recordEditModal" data-toggle="modal" >Edit</button>
 
-											@if (isset($inactive_trackers) && $inactive_trackers)
+											{{-- @if (isset($inactive_trackers) && $inactive_trackers) --}}
 											<button type="button" role="button" class="btn btn-xs btn-theme delete-record" data-id="{{ $tracker->tracker_id }}" data-url="{{ route('tracker.delete', $tracker->tracker_id) }}" data-target="#recordDeleteModal" data-toggle="modal" >Delete</button>
-											@endif
+											{{-- @endif --}}
 												</div>
 											</td>
 										</tr>
