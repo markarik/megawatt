@@ -18,6 +18,7 @@ class CommonHelpers {
 	}
 	
 	static function sendSms($mobile_no, $sms_text){
+		echo env('AFRICAS_TALKING_USERNAME');
 		if( $mobile_no && $sms_text ){
 			$username = env('AFRICAS_TALKING_USERNAME');
 			$apikey = env('AFRICAS_TALKING_API_KEY');
