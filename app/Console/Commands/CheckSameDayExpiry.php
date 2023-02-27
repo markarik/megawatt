@@ -68,6 +68,7 @@ class CheckSameDayExpiry extends Command
     ->get();
 
 
+    echo $trackers_expiries;
 
 
         

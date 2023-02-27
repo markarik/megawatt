@@ -41,7 +41,9 @@ class SendMessagesToClients extends Command
      */
     public function handle()
     {
-        $unsent_broadcasts = ClientBroadcastNotification::where('status', 0)->limit(10)->get();
+        $unsent_broadcasts = ClientBroadcastNotification::with('client')->where('status', 0)->limit(10)->get();
+
+        echo $unsent_broadcasts;
 
 		if( $unsent_broadcasts ){
 			$find = ['#name', '#phone'];
@@ -57,6 +59,8 @@ class SendMessagesToClients extends Command
                 $this->info($sent);
                 
                 if ($sent) {
+
+                    echo $sent;
                 
                     $unsent_broadcast->status = 1;
                     $unsent_broadcast->save();
